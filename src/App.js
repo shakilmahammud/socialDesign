@@ -6,6 +6,7 @@ import {
   Link
 } from "react-router-dom"
 import './App.css'
+import { Login } from "./Components/Authentication/Login/Login";
 import { Home } from './Components/Home/Home/Home';
 
 function App() {
@@ -14,6 +15,9 @@ function App() {
    <Switch>
      <Route exact path="/">
      <Home/>
+     </Route>
+     <Route  path="/login">
+     <Login/>
      </Route>
    </Switch>
     </Router>
