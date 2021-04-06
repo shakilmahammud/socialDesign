@@ -68,7 +68,7 @@ a{
   font-size: 30px;
   cursor: pointer;
 }
-.postArea .uploadIcons  button{
+.postArea .uploadIcons  input[type="submit"]{
   margin-left: 30px;
   background: #3AB4FB;
   color: #fff;

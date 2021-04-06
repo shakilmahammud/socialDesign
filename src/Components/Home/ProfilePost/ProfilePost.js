@@ -4,11 +4,12 @@ import ChevronRightOutlinedIcon from '@material-ui/icons/ChevronRightOutlined';
 import VideocamOutlinedIcon from '@material-ui/icons/VideocamOutlined';
 import AddPhotoAlternateOutlinedIcon from '@material-ui/icons/AddPhotoAlternateOutlined';
 
-export const ProfilePost = () => {
+export const ProfilePost = ({handleValue,success,setFileVideo,fileVideo,handleaddpost}) => {
     const [selectedFile, setSelectedFile] = useState()
     const [selectedVideo, setSelectedVideo] = useState()
     const [preview, setPreview] = useState()
     const [previewVideo, setPreviewVideo] = useState()
+
     useEffect(() => {
         if (!selectedFile) {
             setPreview(undefined)
@@ -26,11 +27,13 @@ export const ProfilePost = () => {
     const onSelectFile = e => {
         if (!e.target.files || e.target.files.length === 0) {
             setSelectedFile(undefined)
+            setFileVideo({})
             return
         }
 
         // I've kept this example simple by using the first image instead of multiple
         setSelectedFile(e.target.files[0])
+        setFileVideo({...fileVideo,pic:e.target.files[0]})
     }
     useEffect(() => {
         if (!selectedVideo) {
@@ -48,11 +51,12 @@ export const ProfilePost = () => {
     const onSelectVideo = e => {
         if (!e.target.files || e.target.files.length === 0) {
             setSelectedVideo(undefined)
+            setFileVideo({})
             return
         }
-
         // I've kept this example simple by using the first image instead of multiple
         setSelectedVideo(e.target.files[0])
+        setFileVideo({...fileVideo,video:e.target.files[0].length})
     }
    
     return (
@@ -65,7 +69,7 @@ export const ProfilePost = () => {
                         </div>
                         <div className="text-center">
                          <img src="https://images.unsplash.com/photo-1617368354211-2d7e04959261?ixid=MXwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3OHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="" style={{width:"100px",height:"100px",borderRadius:"50px",marginTop:"-30px",marginBottom:"20px"}}/>
-                         <h5>User Name</h5>
+                         <h5>{success?.data.name}</h5>
                          <h6>Lorem ipsum dolor sit amet.</h6>
                         </div>
                         <div className="row" style={{marginTop:"10px"}}>
@@ -91,8 +95,8 @@ export const ProfilePost = () => {
                     </div>
                     <div className="col-md-7">
                         <div className="postArea">
-                       
-                            <textarea name="message" placeholder="Create Post..." style={{width:"100%",height:"130px",}}></textarea>
+                       <form onSubmit={handleaddpost} >
+                            <textarea name="message" placeholder="Create Post..." style={{width:"100%",height:"130px",}} onChange={handleValue}></textarea>
                            <div className="previewfiles">
                           {selectedFile&& <img src={preview} alt="" width="130px" height="130px"/>} 
                          {selectedVideo && <video width="100" height="100px" controls>
@@ -101,12 +105,13 @@ export const ProfilePost = () => {
                            </div>
                             <div className="uploadIcons">
                             <label htmlFor="uploadFile"><AddPhotoAlternateOutlinedIcon/></label>
-                            <input type="file" id="uploadFile" style={{display:"none"}} accept="image/*" onChange={onSelectFile}/>
+                            <input type="file" id="uploadFile" style={{display:"none"}} accept="image/*" multiple onChange={onSelectFile}/>
                             <label htmlFor="uplodVideo"> <VideocamOutlinedIcon/></label>
                             <input type="file" id="uplodVideo" style={{display:"none"}} accept="video/*" onChange={onSelectVideo} />
                                
-                                <button>post</button>
+                                <input type="submit" value="post"/>
                             </div>
+                            </form>
                         </div>
                         <div className="row" style={{background:"#fff",borderRadius:"10px",marginTop:"50px",marginLeft:"5px",marginRight:"5px",padding:"10px"}}>
                             <div className="col-md-2">
