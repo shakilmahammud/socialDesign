@@ -11,7 +11,7 @@ export const Home = () => {
     const [value,setvalue]=useState({})
     const [success,setSuccess]=useState()
    const [fileVideo,setFileVideo]=useState({})
-   console.log(fileVideo.pic)
+   console.log(fileVideo.video?.size)
 const getUser=async e=>{
     const accessToken=localStorage.getItem('accessToken')
         const formData=new FormData()
@@ -31,6 +31,7 @@ const getUser=async e=>{
 
     useEffect(()=>{
         getUser()
+        handleNewsFeed()
     },[])
 
     const handleValue=(e)=>{
@@ -40,30 +41,60 @@ const getUser=async e=>{
     }
     const handleaddpost=async e=>{
         e.preventDefault();
+        let video=""
+        let images=""
+        if(fileVideo?.video !==undefined){
+            video=fileVideo.video
+        }
+        if(fileVideo?.pic!==undefined){
+            images=fileVideo.pic
+        }
         const accessToken=localStorage.getItem('accessToken')
             const formData=new FormData()
             formData.append('accessToken',accessToken)
             formData.append('caption',value.message)
-            // formData.append('image',fileVideo?.pic)
-            // formData.append('video',fileVideo.video)
+            formData.append('image',images)
+            formData.append('video',video)
             formData.append('_id',success?.data._id)
-            try{
-                const response=await axios.post(proxy.endpoint+'addPost',formData)
-                if(response){
-                    if(response?.data.status==="success"){
-                        console.log(response)
+            if(value.message !== undefined || video !=="" || images !=="" ){
+                try{
+                    const response=await axios.post(proxy.endpoint+'addPost',formData)
+                    if(response){
+                        if(response?.data.status==="success"){
+                            console.log(response)
+                        }
                     }
-                }
-               }catch (e) {
-                   console.log(e)
-               }
+                   }catch (e) {
+                       console.log(e)
+                   }
+                   handleNewsFeed()
+            }else{
+                alert('Please Write or upload something')
+            }
               
+    }
+const [newsfeed,setNewsFeed]=useState([])
+console.log(newsfeed)
+    const handleNewsFeed=async e=>{
+        const accessToken=localStorage.getItem('accessToken')
+            const formData=new FormData()
+        formData.append('accessToken',accessToken)
+        try{
+            const response=await axios.post(proxy.endpoint+'getNewsfeed',formData)
+            if(response){
+                if(response?.data.status==="success"){
+                    setNewsFeed(response.data.data)
+                }
+            }
+           }catch (e) {
+               console.log(e)
+           }
     }
     return (
         <div>
            <Header/> 
            <ProfilePost success={success} handleValue={handleValue} setFileVideo={setFileVideo} fileVideo={fileVideo} handleaddpost={handleaddpost}/>
-           <Post/>
+           <Post newsfeed={newsfeed}/>
         </div>
     )
 }

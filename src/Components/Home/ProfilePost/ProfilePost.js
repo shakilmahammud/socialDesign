@@ -27,10 +27,10 @@ export const ProfilePost = ({handleValue,success,setFileVideo,fileVideo,handlead
     const onSelectFile = e => {
         if (!e.target.files || e.target.files.length === 0) {
             setSelectedFile(undefined)
-            setFileVideo({})
+            setFileVideo("")
             return
         }
-
+     console.log(e.target.files[0].size)
         // I've kept this example simple by using the first image instead of multiple
         setSelectedFile(e.target.files[0])
         setFileVideo({...fileVideo,pic:e.target.files[0]})
@@ -51,12 +51,13 @@ export const ProfilePost = ({handleValue,success,setFileVideo,fileVideo,handlead
     const onSelectVideo = e => {
         if (!e.target.files || e.target.files.length === 0) {
             setSelectedVideo(undefined)
-            setFileVideo({})
+            setFileVideo("")
             return
         }
+        console.log(e.target.files[0].size)
         // I've kept this example simple by using the first image instead of multiple
         setSelectedVideo(e.target.files[0])
-        setFileVideo({...fileVideo,video:e.target.files[0].length})
+        setFileVideo({...fileVideo,video:e.target.files[0]})
     }
    
     return (
@@ -96,7 +97,7 @@ export const ProfilePost = ({handleValue,success,setFileVideo,fileVideo,handlead
                     <div className="col-md-7">
                         <div className="postArea">
                        <form onSubmit={handleaddpost} >
-                            <textarea name="message" placeholder="Create Post..." style={{width:"100%",height:"130px",}} onChange={handleValue}></textarea>
+                            <textarea name="message" placeholder="Create Post..." style={{width:"100%",height:"130px",}} onChange={handleValue} ></textarea>
                            <div className="previewfiles">
                           {selectedFile&& <img src={preview} alt="" width="130px" height="130px"/>} 
                          {selectedVideo && <video width="100" height="100px" controls>

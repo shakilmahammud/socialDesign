@@ -130,3 +130,8 @@ margin-bottom: 10px;
   color: #3AB4FB;
   font-size: 30px;
 }
+/*post user profile pic*/
+.userp .MuiAvatar-root{
+  width:50px;
+  height:50px;
+}
