@@ -11,7 +11,8 @@ export const Home = () => {
     const [value,setvalue]=useState({})
     const [success,setSuccess]=useState()
    const [fileVideo,setFileVideo]=useState({})
-   console.log(fileVideo.video?.size)
+ 
+   
 const getUser=async e=>{
     const accessToken=localStorage.getItem('accessToken')
         const formData=new FormData()
@@ -61,7 +62,8 @@ const getUser=async e=>{
                     const response=await axios.post(proxy.endpoint+'addPost',formData)
                     if(response){
                         if(response?.data.status==="success"){
-                            console.log(response)
+                          console.log("ok")
+                          window.location.reload(true);
                         }
                     }
                    }catch (e) {
@@ -74,7 +76,7 @@ const getUser=async e=>{
               
     }
 const [newsfeed,setNewsFeed]=useState([])
-console.log(newsfeed)
+
     const handleNewsFeed=async e=>{
         const accessToken=localStorage.getItem('accessToken')
             const formData=new FormData()

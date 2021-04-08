@@ -25,7 +25,7 @@ export const PostView = ({feed}) => {
                 <p  style={{marginLeft:"20px",}}>{times} {createdAts.getHours()>=12?<span>PM</span>:<span>AM</span>}</p>
                 </div>
             </div>
-            {caption?<div className="col-md-12">
+            {caption!=="undefined"?<div className="col-md-12">
                 <div><p style={{marginTop:"10px"}}>{caption}</p></div>
             </div>:null}
             {image?<div className="col-md-12">
